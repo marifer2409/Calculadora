@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Display } from '../components/botones/display';
 import { Rejilla } from '../components/botones/rejilla';
+import { useCalculadora } from '../hook/useCalculadora';
 
 export default function Index() {
-  // Configurado para dar resultado 0 con la operación correspondiente
-  const [operation, setOperation] = useState('20 × 0');
-  const [result, setResult] = useState('0');
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const { operation, result, theme, setTheme, handleButtonPress } = useCalculadora();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,11 +26,11 @@ export default function Index() {
         </View>
       </View>
 
-      {/* Pantalla principal */}
+      {/* Pantalla principal de la calculadora */}
       <Display operation={operation} result={result} />
 
-      {/* Rejilla de botones */}
-      <Rejilla />
+      {/* Rejilla de botones conectada al hook */}
+      <Rejilla onPressButton={handleButtonPress} />
     </SafeAreaView>
   );
 }
@@ -41,7 +38,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3B2A63', // Fondo morado degradado/oscuro según el prototipo
+    backgroundColor: '#3B2A63',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
